@@ -1,6 +1,5 @@
 <?php
 
-
 use Doctrine\Common\EventManager;
 use League\Container\ContainerInterface;
 use Refinery29\Piston\Piston;
@@ -79,6 +78,7 @@ $route->map('POST', '/foo', function (ServerRequestInterface $request, ResponseI
 
     // Return Response
     $response->getBody()->write($responseJSON);
+    $response->withHeader('Access-Control-Allow-Origin', '*');
     return $response;
 });
 
@@ -88,6 +88,7 @@ $route->map('GET', '/foo/{id:number}', function (ServerRequestInterface $request
     $twig = $container->get(TWIG);
     $template = $twig->render(sprintf(FILE_NAME_SIMPLE_AMP, $id));
     $response->getBody()->write($template);
+    $response->withHeader('Access-Control-Allow-Origin', '*');
     return $response;
 });
 

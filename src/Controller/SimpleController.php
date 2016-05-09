@@ -6,6 +6,8 @@ require_once 'src/Controller/AbstractController.php';
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use FloatApi\Writer\SimpleWriter;
+
 use Twig_Environment;
 
 class SimpleController extends AbstractController
@@ -16,11 +18,18 @@ class SimpleController extends AbstractController
     protected $twig;
 
     /**
-     * @param Twig_Environment $twig
+     * @var SimpleWriter
      */
-    public function __construct(Twig_Environment $twig){
+    protected $simpleWriter;
 
+
+    /**
+     * @param Twig_Environment $twig
+     * @param SimpleWriter $simpleWriter
+     */
+    public function __construct(Twig_Environment $twig, SimpleWriter $simpleWriter){
         $this->twig = $twig;
+        $this->simpleWriter = $simpleWriter;
     }
 
     /**
@@ -32,11 +41,15 @@ class SimpleController extends AbstractController
     public function renderPage(Request $request, Response $response, $args = [])
     {
         $id = $args['id'];
+        $context = $args['context'];
+
         //AMP
         $template = $this->twig->render(sprintf(FILE_NAME_SIMPLE_AMP, $id));
+
         //TODO FBIA
         //TODO Apple News
         //TODO RSS
+
         $response->getBody()->write($template);
         return $response;
     }
@@ -52,19 +65,21 @@ class SimpleController extends AbstractController
         // Decode Request
         $body = json_decode($request->getBody()->getContents(), true);
 
-        /** @var Twig_Environment $twig */
-        // Grab Template using TWIG
-
-        $template = $this->twig->render(TEMPLATE_SIMPLE_AMP, $body);
-
-        // Create File name
         $number = $this->getInc();
 
-        $filename = FILE_NAME_TEMPLATE_PREFIX.sprintf(FILE_NAME_SIMPLE_AMP, $number);
+        // AMP
+        $this->simpleWriter->writeAMPPage(
+            $this->twig,
+            TEMPLATE_SIMPLE_AMP,
+            FILE_NAME_TEMPLATE_PREFIX,
+            FILE_NAME_SIMPLE_AMP,
+            $number,
+            $body);
 
-        //Create Template
-        $file = fopen($filename, "w");
-        fwrite($file, $template);
+        //Facebook Instant
+        $this->simpleWriter->writeFBPage(
+
+        );
 
         $responseJSON = json_encode(['id' => $number]);
 

@@ -2,6 +2,7 @@
 
 namespace FloatApi\Writer;
 
+use League\Route\Http\Exception;
 use Twig_Environment;
 
 class SimpleWriter
@@ -21,7 +22,11 @@ class SimpleWriter
         $filename = $prefix.sprintf($fileNameTemplate, $number);
         //Create Template
         $file = fopen($filename, "w");
-        fwrite($file, $template);
+        if(fwrite($file, $template) === false)
+        {
+            new \Exception("Unable to WRite");
+        }
+
     }
     public function writeFBPage()
     {

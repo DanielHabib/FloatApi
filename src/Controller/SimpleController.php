@@ -77,9 +77,7 @@ class SimpleController extends AbstractController
             $body);
 
         //Facebook Instant
-        $this->simpleWriter->writeFBPage(
-
-        );
+        $this->simpleWriter->writeFBPage();
 
         $responseJSON = json_encode(['id' => $number]);
 
@@ -88,7 +86,4 @@ class SimpleController extends AbstractController
 
         return $response->withHeader('Access-Control-Allow-Origin', '*')->withHeader('Access-Control-Allow-Headers', 'Content-Type');
     }
-
-
-
 }

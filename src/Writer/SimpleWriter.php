@@ -7,6 +7,7 @@ use Twig_Environment;
 
 class SimpleWriter
 {
+    const ERROR_UNABLE_TO_WRITE_AMP = "Unable to write Simple Amp Article";
     /**
      * @param Twig_Environment $twig
      * @param string $blankTemplate
@@ -24,7 +25,7 @@ class SimpleWriter
         $file = fopen($filename, "w");
         if(fwrite($file, $template) === false)
         {
-            new \Exception("Unable to WRite");
+            new \Exception(self::ERROR_UNABLE_TO_WRITE_AMP);
         }
 
     }

@@ -29,7 +29,7 @@ $container->share('request', function () {
 $container->share(EntityManager::class, function() use ($isDevMode){
 
     $connectionParams = array(
-        'dbname' => null,
+        'dbname' => 'api',
         'user' => 'root',
         'password' => '7CVzgIrdtQ',
         'host' => 'localhost',

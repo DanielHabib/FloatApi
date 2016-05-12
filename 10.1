@@ -1,0 +1,10 @@
+<br />
+<b>Fatal error</b>:  Uncaught exception 'Twig_Error_Loader' with message 'The &quot;../templates/&quot; directory does not exist.' in /Users/daniel.habib/repos/FloatApi/vendor/twig/twig/lib/Twig/Loader/Filesystem.php:94
+Stack trace:
+#0 /Users/daniel.habib/repos/FloatApi/vendor/twig/twig/lib/Twig/Loader/Filesystem.php(76): Twig_Loader_Filesystem-&gt;addPath('../templates/', '__main__')
+#1 /Users/daniel.habib/repos/FloatApi/vendor/twig/twig/lib/Twig/Loader/Filesystem.php(34): Twig_Loader_Filesystem-&gt;setPaths('../templates/')
+#2 /Users/daniel.habib/repos/FloatApi/config/container.php(40): Twig_Loader_Filesystem-&gt;__construct('../templates/')
+#3 [internal function]: {closure}()
+#4 /Users/daniel.habib/repos/FloatApi/vendor/league/container/src/Definition/CallableDefinition.php(21): call_user_func_array(Object(Closure), Array)
+#5 /Users/daniel.habib/repos/FloatApi/vendor/league/container/src/Container.php(283): League\Container\Definition\CallableDefinition-&gt;build()
+#6 /Users/daniel.habib/repos/FloatApi/vendor/league/container/src/Container.php(83): in <b>/Users/daniel.habib/repos/FloatApi/vendor/twig/twig/lib/Twig/Loader/Filesystem.php</b> on line <b>94</b><br />

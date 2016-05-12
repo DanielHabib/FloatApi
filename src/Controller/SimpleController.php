@@ -38,8 +38,6 @@ class SimpleController extends AbstractController
      */
     public function renderPage(Request $request, Response $response, $args = [])
     {
-
-
         $id = $args['id'];
         $context = $args['context'];
 
@@ -51,7 +49,6 @@ class SimpleController extends AbstractController
         //TODO RSS
 
         $response->getBody()->write($template);
-
 
         return $response;
     }
@@ -66,8 +63,7 @@ class SimpleController extends AbstractController
     public function createPage(Request $request, Response $response, $args = [])
     {
         $authorized = $this->checkAuth($request);
-        if (!$authorized)
-        {
+        if (!$authorized) {
             return $response->withStatus(401, self::ERROR_MESSAGE_UNAUTHORIZED);
         }
 

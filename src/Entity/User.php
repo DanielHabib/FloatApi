@@ -3,7 +3,6 @@
 namespace FloatApi\Entity;
 
 /**
- *
  * @Entity(repositoryClass="FloatApi\Repository\UserRepository")
  *
  * @Table(name="users")
@@ -35,7 +34,6 @@ class User
      * @var string
      */
     protected $password;
-
 
     /**
      * @return int

@@ -3,7 +3,6 @@
 namespace FloatApi\Entity;
 
 /**
- *
  * @Entity(repositoryClass="FloatApi\Repository\ArticleRepository")
  *
  * @Entity @Table(name="articles")

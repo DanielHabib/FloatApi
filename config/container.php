@@ -8,7 +8,8 @@ use Doctrine\ORM\Tools\Setup;
 use FloatApi\Controller\UserController;
 use FloatApi\Hydrator;
 use FloatApi\Serializer;
-
+use FloatApi\Repository;
+use FloatApi\Entity;
 
 ini_set('display_errors', '1');
 
@@ -37,7 +38,7 @@ $container->share(EntityManager::class, function() use ($isDevMode){
 $container->share('emitter', Zend\Diactoros\Response\SapiEmitter::class);
 $container->share(SimpleWriter::class);
 $container->share(TWIG, function(){
-    $loader = new Twig_Loader_Filesystem('/../templates/');
+    $loader = new Twig_Loader_Filesystem(__DIR__ . '/../templates/');
     $twig = new Twig_Environment($loader);
 
     return $twig;
@@ -49,10 +50,17 @@ $container->share(SimpleController::class)
     ->withArgument(SimpleWriter::class);
 $container->share(Hydrator\UserHydrator::class);
 $container->share(Serializer\UserSerializer::class);
+$container->share(Repository\UserRepository::class, function() use ($container){
+    /** @var EntityManager $em */
+    $em = $container->get(EntityManager::class);
+    return $em->getRepository(Entity\User::class);
+});
+
 $container->share(UserController::class)
     ->withArgument(EntityManager::class)
     ->withArgument(Serializer\UserSerializer::class)
     ->withArgument(Hydrator\UserHydrator::class)
+    ->withArgument(Repository\UserRepository::class)
     ;
 
 return $container;

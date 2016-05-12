@@ -7,7 +7,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class AbstractController
 {
-
     const ERROR_MESSAGE_UNAUTHORIZED = 'Unauthorized';
     /**
      * @return int
@@ -28,6 +27,7 @@ class AbstractController
     /**
      * @param Response $response
      * @param $responseJSON
+     *
      * @return Response
      */
     public function writeResponse(Response $response, $responseJSON)
@@ -39,24 +39,23 @@ class AbstractController
 
     /**
      * @param Request $request
+     *
      * @return array
      */
-    public function getBody(Request $request){
+    public function getBody(Request $request)
+    {
         return json_decode($request->getBody()->getContents(), true);
     }
 
     public function checkAuth(Request $request)
     {
-
         $cookies = $request->getCookieParams();
-        if(array_key_exists('logged_in', $cookies))
-        {
-            if ($cookies['logged_in'] === 'true')
-            {
+        if (array_key_exists('logged_in', $cookies)) {
+            if ($cookies['logged_in'] === 'true') {
                 return true;
             }
-
         }
+
         return false;
     }
 }

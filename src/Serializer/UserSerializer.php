@@ -2,12 +2,13 @@
 
 namespace FloatApi\Serializer;
 
-use FloatApi\Serializer\SerializerInterface;
 use FloatApi\Entity\User;
+
 class UserSerializer implements SerializerInterface
 {
     /**
      * @param User $user
+     *
      * @return array
      */
     public static function transform($user)
@@ -17,7 +18,7 @@ class UserSerializer implements SerializerInterface
 
             'id' => $user->getId(),
             'name' => $user->getName(),
-            'email' => $user->getEmail()
+            'email' => $user->getEmail(),
         ];
 
         return $data;

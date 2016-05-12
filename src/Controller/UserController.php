@@ -33,11 +33,10 @@ class UserController extends AbstractController
      */
     private $userRepository;
 
-
     /**
-     * @param EntityManager $entityManager
+     * @param EntityManager  $entityManager
      * @param UserSerializer $userSerializer
-     * @param UserHydrator $userHydrator
+     * @param UserHydrator   $userHydrator
      * @param UserRepository $userRepository
      */
     public function __construct(
@@ -45,8 +44,7 @@ class UserController extends AbstractController
         UserSerializer $userSerializer,
         UserHydrator $userHydrator,
         UserRepository $userRepository
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->userSerializer = $userSerializer;
         $this->userHydrator = $userHydrator;
@@ -64,16 +62,19 @@ class UserController extends AbstractController
     {
         // If fetch by email, confirm password
         $cookies = $request->getCookieParams();
+
+        if (!array_key_exists('email', $cookies)  || !array_key_exists('email', $cookies)) {
+            return $response->withStatus(401, self::ERROR_MESSAGE_UNABLE_TO_LOGIN);
+        }
+
         $email = $cookies['email'];
         $password = $cookies['password'];
 
         /** @var User $user */
-        $user = $this->userRepository->findBy(array('email' => $email));
+        $user = $this->userRepository->findOneBy(array('email' => $email));
 
-        if ($user->getPassword() !== $password)
-        {
-            $response->withStatus(401, self::ERROR_MESSAGE_UNABLE_TO_LOGIN);
-            return $response;
+        if ($user === null || $user->getPassword() !== $password) {
+            return $response->withStatus(401, self::ERROR_MESSAGE_UNABLE_TO_LOGIN);
         }
 
         $json = json_encode(['logged_in' === true]);
@@ -104,13 +105,13 @@ class UserController extends AbstractController
     {
         $id = $args['id'];
         $authorized = $this->checkAuth($request);
-        if (!$authorized)
-        {
+        if (!$authorized) {
             return $response->withStatus(401, self::ERROR_MESSAGE_UNAUTHORIZED);
         }
         /** @var User $user */
         $user = $this->userRepository->find($id);
         $json = json_encode($this->userSerializer->transform($user));
+
         return $this->writeResponse($response, $json);
     }
 

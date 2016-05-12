@@ -28,11 +28,15 @@ $container->share('request', function () {
 });
 $container->share(EntityManager::class, function() use ($isDevMode){
 
-    $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../src"), $isDevMode);
-    $conn = array(
-        'driver' => 'pdo_sqlite',
-        'path' => __DIR__ . '/db.sqlite'
+    $connectionParams = array(
+        'dbname' => 'mydb',
+        'user' => 'user',
+        'password' => 'secret',
+        'host' => 'localhost',
+        'driver' => 'pdo_mysql',
     );
+    $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../src"), $isDevMode);
+    $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
     return EntityManager::create($conn, $config);
 });
 $container->share('emitter', Zend\Diactoros\Response\SapiEmitter::class);

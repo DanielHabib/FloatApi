@@ -2,12 +2,9 @@
 
 namespace FloatApi\Controller;
 
-require_once 'src/Controller/AbstractController.php';
-
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use FloatApi\Writer\SimpleWriter;
-
 use Twig_Environment;
 
 class SimpleController extends AbstractController
@@ -22,24 +19,27 @@ class SimpleController extends AbstractController
      */
     protected $simpleWriter;
 
-
     /**
      * @param Twig_Environment $twig
-     * @param SimpleWriter $simpleWriter
+     * @param SimpleWriter     $simpleWriter
      */
-    public function __construct(Twig_Environment $twig, SimpleWriter $simpleWriter){
+    public function __construct(Twig_Environment $twig, SimpleWriter $simpleWriter)
+    {
         $this->twig = $twig;
         $this->simpleWriter = $simpleWriter;
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param array $args
+     * @param array    $args
+     *
      * @return Response
      */
     public function renderPage(Request $request, Response $response, $args = [])
     {
+
+
         $id = $args['id'];
         $context = $args['context'];
 
@@ -51,19 +51,28 @@ class SimpleController extends AbstractController
         //TODO RSS
 
         $response->getBody()->write($template);
+
+
         return $response;
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param array $args
+     * @param array    $args
+     *
      * @return \Psr\Http\Message\MessageInterface
      */
     public function createPage(Request $request, Response $response, $args = [])
     {
+        $authorized = $this->checkAuth($request);
+        if (!$authorized)
+        {
+            return $response->withStatus(401, self::ERROR_MESSAGE_UNAUTHORIZED);
+        }
+
         // Decode Request
-        $body = json_decode($request->getBody()->getContents(), true);
+        $body = $this->getBody($request);
 
         $number = $this->getInc();
 
@@ -79,11 +88,10 @@ class SimpleController extends AbstractController
         //Facebook Instant
         $this->simpleWriter->writeFBPage();
 
+        // Serialize
         $responseJSON = json_encode(['id' => $number]);
 
         // Return Response
-        $response->getBody()->write($responseJSON);
-
-        return $response->withHeader('Access-Control-Allow-Origin', '*')->withHeader('Access-Control-Allow-Headers', 'Content-Type');
+        return $this->writeResponse($response, $responseJSON);
     }
 }

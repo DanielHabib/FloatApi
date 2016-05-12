@@ -1,80 +1,58 @@
 <?php
 
-use Dotenv\Dotenv;
-use League\Container\Container;
-//use Refinery29\Environment\Environment;
-//use Refinery29\NewRelic;
-//use Refinery29\FloatApi\ServiceProvider;
 use Whoops\Handler;
-use Whoops\Run;
+use FloatApi\Writer\SimpleWriter;
+use FloatApi\Controller\SimpleController;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
+use FloatApi\Controller\UserController;
+use FloatApi\Hydrator;
+use FloatApi\Serializer;
+
 
 ini_set('display_errors', '1');
 
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../src/Controller/SimpleController.php';
-$envPath = './';
-//$proxyPath = getenv('ZEP_PROXY_DIR') ?: null;
 
-if (!getenv('SKIP_DOTENV')) {
-    $dotEnv = new Dotenv(__DIR__);
+const TWIG = 'twig';
 
-    $dotEnv->load();
-    $dotEnv->required([
-        'FLOAT_ENV',
-    ]);
-}
+$isDevMode = false;
+// Container
+$container = new League\Container\Container;
+$container->share('response', Zend\Diactoros\Response::class);
+$container->share('request', function () {
+    return Zend\Diactoros\ServerRequestFactory::fromGlobals(
+        $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
+    );
+});
+$container->share(EntityManager::class, function() use ($isDevMode){
 
-$container = new Container();
+    $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../src"), $isDevMode);
+    $conn = array(
+        'driver' => 'pdo_sqlite',
+        'path' => __DIR__ . '/db.sqlite'
+    );
+    return EntityManager::create($conn, $config);
+});
+$container->share('emitter', Zend\Diactoros\Response\SapiEmitter::class);
+$container->share(SimpleWriter::class);
+$container->share(TWIG, function(){
+    $loader = new Twig_Loader_Filesystem('/../templates/');
+    $twig = new Twig_Environment($loader);
 
-//$container->addServiceProvider(new ServiceProvider\DBALMigrationConfigurationServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\MonologServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\ControllerServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\FractalManagerServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\RepositoryServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\ResourceBuilderServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\ScopeBuilderServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\SolrServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\TransformerContainerServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\ValidatorServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\RedisServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\MiddlewareServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\HydratorServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\ListenerServiceProvider(getenv('FOUNDRY_HOST')));
-//$container->addServiceProvider(new ServiceProvider\UrlBuilderServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\EventServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\NewRelicServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\EnvironmentServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\ApplicationServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\UrlBuilderServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\RouteServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\Image\UrlServiceProvider(getenv('DEV_DOMAIN')));
-//$container->addServiceProvider(new ServiceProvider\SubscriberServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\EventSubscriberServiceProvider());
-//$container->addServiceProvider(new ServiceProvider\EventManagerServiceProvider());
+    return $twig;
+});
 
-
-//$container->share(Run::class, function () use ($container) {
-//    $whoops = new Run();
-//
-//    $whoops->pushHandler(new Handler\PrettyPageHandler());
-//
-//    $jsonHandler = new Whoops\Handler\JsonResponseHandler();
-//
-//    $jsonHandler->addTraceToOutput(true);
-//
-//    $whoops->pushHandler($jsonHandler);
-//
-//    return $whoops;
-//});
-
-//$container->addServiceProvider(new ServiceProvider\EntityManagerServiceProvider(
-//    'mysqli',
-//    getenv('FLOAT_MYSQL_USER'),
-//    getenv('FLOAT_MYSQL_PASSWORD'),
-//    getenv('FLOAT_MYSQL_HOST'),
-//    getenv('FLOAT_MYSQL_DB_NAME'),
-//    getenv('FLOAT_ENTITY_DIR'),
-//    $proxyPath ?: getenv('ZEP_PROXY_DIR')
-//));
+// Controllers
+$container->share(SimpleController::class)
+    ->withArgument(TWIG)
+    ->withArgument(SimpleWriter::class);
+$container->share(Hydrator\UserHydrator::class);
+$container->share(Serializer\UserSerializer::class);
+$container->share(UserController::class)
+    ->withArgument(EntityManager::class)
+    ->withArgument(Serializer\UserSerializer::class)
+    ->withArgument(Hydrator\UserHydrator::class)
+    ;
 
 return $container;

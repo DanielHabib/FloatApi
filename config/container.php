@@ -31,7 +31,7 @@ $container->share(EntityManager::class, function() use ($isDevMode){
     $connectionParams = array(
         'dbname' => 'mydb',
         'user' => 'user',
-        'password' => 'secret',
+        'password' => '7CVzgIrdtQ',
         'host' => 'localhost',
         'driver' => 'pdo_mysql',
     );

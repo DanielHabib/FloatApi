@@ -52,6 +52,7 @@ $container->share(TWIG, function(){
 $container->share(SimpleController::class)
     ->withArgument(TWIG)
     ->withArgument(SimpleWriter::class);
+
 $container->share(Hydrator\UserHydrator::class);
 $container->share(Serializer\UserSerializer::class);
 $container->share(Repository\UserRepository::class, function() use ($container){

@@ -61,14 +61,14 @@ class UserController extends AbstractController
     public function login(Request $request, Response $response, $args = [])
     {
         // If fetch by email, confirm password
-        $cookies = $request->getCookieParams();
+        $params = $this->getBody($request);
 
-        if (!array_key_exists('email', $cookies)  || !array_key_exists('email', $cookies)) {
+        if (!array_key_exists('email', $params)  || !array_key_exists('email', $params)) {
             return $response->withStatus(401, self::ERROR_MESSAGE_UNABLE_TO_LOGIN);
         }
 
-        $email = $cookies['email'];
-        $password = $cookies['password'];
+        $email = $params['email'];
+        $password = $params['password'];
 
         /** @var User $user */
         $user = $this->userRepository->findOneBy(array('email' => $email));

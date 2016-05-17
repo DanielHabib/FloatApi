@@ -36,6 +36,13 @@ class Article
     protected $ampFileName;
 
     /**
+     * @Column(type="string")
+     *
+     * @var string
+     */
+    protected $fbiaFileName;
+
+    /**
      * @return int
      */
     public function getId()
@@ -88,5 +95,20 @@ class Article
     public function setAmpFileName($ampFileName)
     {
         $this->ampFileName = $ampFileName;
+    }
+    /**
+     * @return string
+     */
+    public function getFbiaFileName()
+    {
+        return $this->fbiaFileName;
+    }
+
+    /**
+     * @param $fbiaFileName
+     */
+    public function setFbiaFileName($fbiaFileName)
+    {
+        $this->ampFileName = $fbiaFileName;
     }
 }

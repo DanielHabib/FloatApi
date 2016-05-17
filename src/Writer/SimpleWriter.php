@@ -3,8 +3,9 @@
 namespace FloatApi\Writer;
 
 use Twig_Environment;
+use FloatApi\Writer\WriterInterface;
 
-class SimpleWriter
+class SimpleWriter implements WriterInterface
 {
     const ERROR_UNABLE_TO_WRITE_AMP = 'Unable to write Simple Amp Article';
     /**
@@ -15,7 +16,13 @@ class SimpleWriter
      * @param int              $number
      * @param array            $params
      */
-    public function writeAMPPage(Twig_Environment $twig, $blankTemplate, $prefix, $fileNameTemplate, $number, $params)
+    public function writeAMPPage(
+        Twig_Environment $twig,
+        $blankTemplate,
+        $prefix,
+        $fileNameTemplate,
+        $number,
+        $params)
     {
         $template = $twig->render($blankTemplate, $params);
         // Create File name
@@ -28,5 +35,6 @@ class SimpleWriter
     }
     public function writeFBPage()
     {
+
     }
 }

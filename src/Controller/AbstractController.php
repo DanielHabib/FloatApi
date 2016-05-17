@@ -49,13 +49,20 @@ class AbstractController
 
     public function checkAuth(Request $request)
     {
-        $cookies = $request->getCookieParams();
-        if (array_key_exists('logged_in', $cookies)) {
-            if ($cookies['logged_in'] === 'true') {
+        // TODO: Make this based off of cookies?
+//        $cookies = $request->getCookieParams();
+//        if (array_key_exists('logged_in', $cookies)) {
+//            if ($cookies['logged_in'] === 'true') {
+//                return true;
+//            }
+//        }
+
+        $body = $this->getBody($request);
+        if(array_key_exists('loggedIn', $body)) {
+            if ($body['loggedIn'] === true) {
                 return true;
             }
         }
-
         return false;
     }
 }

@@ -4,6 +4,7 @@ namespace FloatApi\Writer;
 
 use Twig_Environment;
 use FloatApi\Writer\WriterInterface;
+use Facebook\InstantArticles\Elements;
 
 class SimpleWriter implements WriterInterface
 {
@@ -16,6 +17,7 @@ class SimpleWriter implements WriterInterface
      * @param int              $number
      * @param array            $params
      */
+    //TODO Remove all dependencies that are constants and just reference them directly
     public function writeAMPPage(
         Twig_Environment $twig,
         $blankTemplate,
@@ -35,6 +37,65 @@ class SimpleWriter implements WriterInterface
     }
     public function writeFBPage()
     {
+        $article =
+            Elements\InstantArticle::create()
+                ->withCanonicalUrl('http://foo.com/article.html')
+                ->withHeader(
+                    Elements\Header::create()
+                        ->withTitle('Big Top Title')
+                        ->withSubTitle('Smaller SubTitle')
+                        ->withPublishTime(
+                            Elements\Time::create(Elements\Time::PUBLISHED)
+                                ->withDatetime(
+                                    \DateTime::createFromFormat(
+                                        'j-M-Y G:i:s',
+                                        '14-Aug-1984 19:30:00'
+                                    )
+                                )
+                        )
+                        ->withModifyTime(
+                            Elements\Time::create(Elements\Time::MODIFIED)
+                                ->withDatetime(
+                                    \DateTime::createFromFormat(
+                                        'j-M-Y G:i:s',
+                                        '10-Feb-2016 10:00:00'
+                                    )
+                                )
+                        )
+                        ->addAuthor(
+                            Elements\Author::create()
+                                ->withName('Author Name')
+                                ->withDescription('Author more detailed description')
+                        )
+                        ->addAuthor(
+                            Elements\Author::create()
+                                ->withName('Author in FB')
+                                ->withDescription('Author user in facebook')
+                                ->withURL('http://facebook.com/author')
+                        )
+                        ->withKicker('Some kicker of this article')
+                        ->withCover(
+                            Elements\Image::create()
+                                ->withURL('https://jpeg.org/images/jpegls-home.jpg')
+                                ->withCaption(
+                                    Elements\Caption::create()
+                                        ->appendText('Some caption to the image')
+                                )
+                        )
+                )
+                // Paragraph1
+                ->addChild(
+                    Elements\Paragraph::create()
+                        ->appendText('Some text to be within a paragraph for testing.')
+                )
+
+                // Footer
+                ->withFooter(
+                    Elements\Footer::create()
+                        ->withCredits('Some plaintext credits.')
+                );
+
+        $html = $article->render('<!doctype html>');
 
     }
 }

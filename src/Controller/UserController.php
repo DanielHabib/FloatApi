@@ -60,6 +60,7 @@ class UserController extends AbstractController
      */
     public function login(Request $request, Response $response, $args = [])
     {
+        var_dump($request);
         // If fetch by email, confirm password
         $params = $this->getBody($request);
 

@@ -37,9 +37,10 @@ class SimpleWriter implements WriterInterface
     }
     public function writeFBPage($number)
     {
+        $filename = 'simple_' . $number . '.html';
         $article =
             Elements\InstantArticle::create()
-                ->withCanonicalUrl('http://foo.com/article.html')
+                ->withCanonicalUrl('http://float.press/articles/fb/' . $filename)
                 ->withHeader(
                     Elements\Header::create()
                         ->withTitle('Big Top Title')
@@ -95,7 +96,6 @@ class SimpleWriter implements WriterInterface
                         ->withCredits('Some plaintext credits.')
                 );
 
-        $filename = 'simple_' . $number . '.html';
         $file = fopen($filename, 'w');
         $template = $article->render('<!doctype html>');
         if (fwrite($file, $template) === false) {

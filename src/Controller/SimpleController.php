@@ -41,8 +41,13 @@ class SimpleController extends AbstractController
         $id = $args['id'];
         $context = $args['context'];
 
+        $template = '';
         //AMP
-        $template = $this->twig->render(sprintf(FILE_NAME_SIMPLE_AMP, $id));
+        if ($context === CONTEXT_AMP){
+            $template = $this->twig->render(sprintf(FILE_NAME_SIMPLE_AMP, $id));
+        } elseif($context === CONTEXT_FB){
+            $template = $this->twig->render(sprintf(FILE_NAME_SIMPLE_FB, $id));
+        }
 
         //TODO FBIA
         //TODO Apple News

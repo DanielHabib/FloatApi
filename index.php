@@ -9,8 +9,10 @@ use FloatApi\Controller\UserController;
 require_once 'vendor/autoload.php';
 
 const CONTEXT_AMP = 'amp';
+const CONTEXT_FB = 'fb';
 const FILE_NAME_TEMPLATE_PREFIX = 'templates/';
 const FILE_NAME_SIMPLE_AMP = 'amp/simple_%d.html';
+const FILE_NAME_SIMPLE_FB = 'fb/simple_%d.html';
 const TEMPLATE_SIMPLE_AMP = 'simple_amp.html';
 const FILE_NAME_INCREMENTER = 'inc.txt';
 const TEMPLATE_COLLECTION = [TEMPLATE_SIMPLE_AMP];

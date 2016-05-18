@@ -34,7 +34,7 @@ class SimpleWriter
         $author = $requestBody['author'];
         $body = $requestBody['body'];
 
-        $filename = 'simple_' . $number . '.html';
+        $filename = 'templates/fb/simple_' . $number . '.html';
         $article =
             Elements\InstantArticle::create()
                 ->withCanonicalUrl('http://float.press/articles/fb/' . $number)

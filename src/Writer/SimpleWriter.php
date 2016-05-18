@@ -35,7 +35,7 @@ class SimpleWriter implements WriterInterface
             new \Exception(self::ERROR_UNABLE_TO_WRITE_AMP);
         }
     }
-    public function writeFBPage()
+    public function writeFBPage($number)
     {
         $article =
             Elements\InstantArticle::create()
@@ -95,7 +95,11 @@ class SimpleWriter implements WriterInterface
                         ->withCredits('Some plaintext credits.')
                 );
 
-        $html = $article->render('<!doctype html>');
-
+        $filename = 'simple_' . $number . '.html';
+        $file = fopen($filename, 'w');
+        $template = $article->render('<!doctype html>');
+        if (fwrite($file, $template) === false) {
+            new \Exception(self::ERROR_UNABLE_TO_WRITE_AMP);
+        }
     }
 }

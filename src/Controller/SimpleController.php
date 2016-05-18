@@ -9,6 +9,7 @@ use Twig_Environment;
 
 class SimpleController extends AbstractController
 {
+
     /**
      * @var Twig_Environment
      */
@@ -41,13 +42,14 @@ class SimpleController extends AbstractController
         $id = $args['id'];
         $context = $args['context'];
 
-        $template = '';
+//        $template = '';
         //AMP
-        if ($context === CONTEXT_AMP){
-            $template = $this->twig->render(sprintf(FILE_NAME_SIMPLE_AMP, $id));
-        } elseif($context === CONTEXT_FB){
-            $template = $this->twig->render(sprintf(FILE_NAME_SIMPLE_FB, $id));
-        }
+        $template = $this->twig->render(sprintf(self::TEMPLATE_CONTEXT_MAPPING[$context], $id));
+//        if ($context === CONTEXT_AMP){
+//            $template = $this->twig->render(sprintf(FILE_NAME_SIMPLE_AMP, $id));
+//        } elseif($context === CONTEXT_FB){
+//            $template = $this->twig->render(sprintf(FILE_NAME_SIMPLE_FB, $id));
+//        }
 
         //TODO FBIA
         //TODO Apple News

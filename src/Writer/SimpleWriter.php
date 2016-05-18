@@ -33,11 +33,12 @@ class SimpleWriter
         $headline = $requestBody['headline'];
         $author = $requestBody['author'];
         $body = $requestBody['body'];
-
         $filename = 'templates/fb/simple_' . $number . '.html';
+
         $article =
             Elements\InstantArticle::create()
                 ->withCanonicalUrl('http://float.press/articles/fb/' . $number)
+                // Header
                 ->withHeader(
                     Elements\Header::create()
                         ->withTitle($headline)
@@ -86,7 +87,6 @@ class SimpleWriter
                     Elements\Paragraph::create()
                         ->appendText($body)
                 )
-
                 // Footer
                 ->withFooter(
                     Elements\Footer::create()

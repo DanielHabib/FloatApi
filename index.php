@@ -16,7 +16,6 @@ const FILE_NAME_SIMPLE_FB = 'fb/simple_%d.html';
 const TEMPLATE_SIMPLE_AMP = 'simple_amp.html';
 const FILE_NAME_INCREMENTER = 'inc.txt';
 const TEMPLATE_COLLECTION = [TEMPLATE_SIMPLE_AMP];
-const TEMPLATE_CONTEXT_MAPPING = ['amp' => FILE_NAME_SIMPLE_AMP];
 
 
 // Container

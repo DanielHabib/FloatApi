@@ -8,6 +8,11 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 class AbstractController
 {
     const ERROR_MESSAGE_UNAUTHORIZED = 'Unauthorized';
+
+    const TEMPLATE_CONTEXT_MAPPING = [
+        CONTEXT_AMP => FILE_NAME_SIMPLE_AMP,
+        CONTEXT_FB => FILE_NAME_SIMPLE_FB
+    ];
     /**
      * @return int
      */

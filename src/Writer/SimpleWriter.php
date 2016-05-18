@@ -3,47 +3,44 @@
 namespace FloatApi\Writer;
 
 use Twig_Environment;
-use FloatApi\Writer\WriterInterface;
 use Facebook\InstantArticles\Elements;
 
-class SimpleWriter implements WriterInterface
+class SimpleWriter
 {
     const ERROR_UNABLE_TO_WRITE_AMP = 'Unable to write Simple Amp Article';
     /**
      * @param Twig_Environment $twig
-     * @param string           $blankTemplate
-     * @param string           $prefix
-     * @param string           $fileNameTemplate
      * @param int              $number
      * @param array            $params
      */
     //TODO Remove all dependencies that are constants and just reference them directly
     public function writeAMPPage(
         Twig_Environment $twig,
-        $blankTemplate,
-        $prefix,
-        $fileNameTemplate,
         $number,
         $params)
     {
-        $template = $twig->render($blankTemplate, $params);
+        $template = $twig->render(TEMPLATE_SIMPLE_AMP, $params);
         // Create File name
-        $filename = $prefix.sprintf($fileNameTemplate, $number);
+        $filename = FILE_NAME_TEMPLATE_PREFIX.sprintf(FILE_NAME_SIMPLE_AMP, $number);
         //Create Template
         $file = fopen($filename, 'w');
         if (fwrite($file, $template) === false) {
             new \Exception(self::ERROR_UNABLE_TO_WRITE_AMP);
         }
     }
-    public function writeFBPage($number)
+    public function writeFBPage($number, $requestBody)
     {
+        $headline = $requestBody['headline'];
+        $author = $requestBody['author'];
+        $body = $requestBody['body'];
+
         $filename = 'simple_' . $number . '.html';
         $article =
             Elements\InstantArticle::create()
-                ->withCanonicalUrl('http://float.press/articles/fb/' . $filename)
+                ->withCanonicalUrl('http://float.press/articles/fb/' . $number)
                 ->withHeader(
                     Elements\Header::create()
-                        ->withTitle('Big Top Title')
+                        ->withTitle($headline)
                         ->withSubTitle('Smaller SubTitle')
                         ->withPublishTime(
                             Elements\Time::create(Elements\Time::PUBLISHED)
@@ -65,7 +62,7 @@ class SimpleWriter implements WriterInterface
                         )
                         ->addAuthor(
                             Elements\Author::create()
-                                ->withName('Author Name')
+                                ->withName($author)
                                 ->withDescription('Author more detailed description')
                         )
                         ->addAuthor(
@@ -87,7 +84,7 @@ class SimpleWriter implements WriterInterface
                 // Paragraph1
                 ->addChild(
                     Elements\Paragraph::create()
-                        ->appendText('Some text to be within a paragraph for testing.')
+                        ->appendText($body)
                 )
 
                 // Footer

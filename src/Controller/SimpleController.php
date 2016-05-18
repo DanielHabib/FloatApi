@@ -75,14 +75,11 @@ class SimpleController extends AbstractController
         // AMP
         $this->simpleWriter->writeAMPPage(
             $this->twig,
-            TEMPLATE_SIMPLE_AMP,
-            FILE_NAME_TEMPLATE_PREFIX,
-            FILE_NAME_SIMPLE_AMP,
             $number,
             $body);
 
         //Facebook Instant
-        $this->simpleWriter->writeFBPage();
+        $this->simpleWriter->writeFBPage($number, $body);
 
         // Serialize
         $responseJSON = json_encode(['id' => $number]);

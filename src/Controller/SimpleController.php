@@ -43,9 +43,9 @@ class SimpleController extends AbstractController
         $context = $args['context'];
 
         //AMP
-        $template = $this->twig->render(sprintf(self::TEMPLATE_CONTEXT_MAPPING[$context], $id));
+        $templateMapping = self::TEMPLATE_CONTEXT_MAPPING;
+        $template = $this->twig->render(sprintf($templateMapping[$context], $id));
 
-        //TODO FBIA
         //TODO Apple News
         //TODO RSS
 
@@ -67,6 +67,7 @@ class SimpleController extends AbstractController
         if (!$authorized) {
             return $response->withStatus(401, self::ERROR_MESSAGE_UNAUTHORIZED);
         }
+        $user =
 
         // Decode Request
         $body = $this->getBody($request);

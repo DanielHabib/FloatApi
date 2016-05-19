@@ -52,25 +52,10 @@ class SimpleWriter
                                     )
                                 )
                         )
-                        ->withModifyTime(
-                            Elements\Time::create(Elements\Time::MODIFIED)
-                                ->withDatetime(
-                                    \DateTime::createFromFormat(
-                                        'j-M-Y G:i:s',
-                                        '10-Feb-2016 10:00:00'
-                                    )
-                                )
-                        )
                         ->addAuthor(
                             Elements\Author::create()
                                 ->withName($author)
                                 ->withDescription('Author more detailed description')
-                        )
-                        ->addAuthor(
-                            Elements\Author::create()
-                                ->withName('Author in FB')
-                                ->withDescription('Author user in facebook')
-                                ->withURL('http://facebook.com/author')
                         )
                         ->withKicker('Some kicker of this article')
                         ->withCover(
@@ -90,7 +75,7 @@ class SimpleWriter
                 // Footer
                 ->withFooter(
                     Elements\Footer::create()
-                        ->withCredits('Some plaintext credits.')
+                        ->withCredits('This article was published using Float')
                 );
 
         $file = fopen($filename, 'w');

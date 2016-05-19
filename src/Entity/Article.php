@@ -2,6 +2,8 @@
 
 namespace FloatApi\Entity;
 
+use FloatApi\Entity\User;
+
 /**
  * @Entity(repositoryClass="FloatApi\Repository\ArticleRepository")
  *
@@ -40,7 +42,34 @@ class Article
      *
      * @var string
      */
-    protected $fbiaFileName;
+    protected $fbFileName;
+
+    /**
+     * @ORM\Column(
+     *     name="user_id",
+     *     type="integer",
+     *     length=11,
+     *     nullable=true,
+     *     options={"unsigned":true}
+     * )
+     *
+     * @var int
+     */
+    protected $userId;
+
+    /**
+     * @ORM\ManyToOne(
+     *     targetEntity="FloatApi\Entity\User",
+     *     cascade={"persist"}
+     * )
+     * @ORM\JoinColumn(
+     *     name="user_id",
+     *     referencedColumnName="id"
+     * )
+     *
+     * @var User
+     */
+    protected $user;
 
     /**
      * @return int
@@ -59,11 +88,27 @@ class Article
     }
 
     /**
-     * @param $headline
+     * @param string $headline
      */
     public function setHeadline($headline)
     {
         $this->headline = $headline;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param user $user
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
     }
 
     /**
@@ -75,7 +120,7 @@ class Article
     }
 
     /**
-     * @param $author
+     * @param string $author
      */
     public function setAuthor($author)
     {
@@ -90,7 +135,7 @@ class Article
     }
 
     /**
-     * @param $ampFileName
+     * @param string $ampFileName
      */
     public function setAmpFileName($ampFileName)
     {
@@ -99,16 +144,16 @@ class Article
     /**
      * @return string
      */
-    public function getFbiaFileName()
+    public function getFbFileName()
     {
-        return $this->fbiaFileName;
+        return $this->fbFileName;
     }
 
     /**
-     * @param $fbiaFileName
+     * @param string $fbiaFileName
      */
-    public function setFbiaFileName($fbiaFileName)
+    public function setFbFileName($fbiaFileName)
     {
-        $this->ampFileName = $fbiaFileName;
+        $this->fbFileName = $fbiaFileName;
     }
 }

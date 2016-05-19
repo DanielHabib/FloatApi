@@ -2,6 +2,7 @@
 
 namespace FloatApi\Controller;
 
+use FloatApi\Entity\Article;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use FloatApi\Writer\SimpleWriter;
@@ -75,13 +76,18 @@ class SimpleController extends AbstractController
         $number = $this->getInc();
 
         // AMP
-        $this->simpleWriter->writeAMPPage(
+        $ampFileName = $this->simpleWriter->writeAMPPage(
             $this->twig,
             $number,
             $body);
 
         //Facebook Instant
-        $this->simpleWriter->writeFBPage($number, $body);
+        $fbFileName = $this->simpleWriter->writeFBPage($number, $body);
+
+        // Create an article object
+        $article = new Article();
+        $article->setAmpFileName($ampFileName);
+        $article->setFbFileName($fbFileName);
 
         // Serialize
         $responseJSON = json_encode(['id' => $number]);

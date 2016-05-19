@@ -14,6 +14,12 @@ class SimpleWriter
      * @param array            $params
      */
     //TODO Remove all dependencies that are constants and just reference them directly
+    /**
+     * @param Twig_Environment $twig
+     * @param int $number
+     * @param array $params
+     * @return string
+     */
     public function writeAMPPage(
         Twig_Environment $twig,
         $number,
@@ -27,7 +33,14 @@ class SimpleWriter
         if (fwrite($file, $template) === false) {
             new \Exception(self::ERROR_UNABLE_TO_WRITE_AMP);
         }
+        return $filename;
     }
+
+    /**
+     * @param $number
+     * @param $requestBody
+     * @return string
+     */
     public function writeFBPage($number, $requestBody)
     {
         $headline = $requestBody['headline'];
@@ -83,5 +96,6 @@ class SimpleWriter
         if (fwrite($file, $template) === false) {
             new \Exception(self::ERROR_UNABLE_TO_WRITE_AMP);
         }
+        return $filename;
     }
 }

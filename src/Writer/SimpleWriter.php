@@ -59,23 +59,19 @@ class SimpleWriter
                 ->withHeader(
                     Elements\Header::create()
                         ->withTitle($headline)
+                        ->addAuthor(
+                            Elements\Author::create()
+                                ->withName($author)
+                        )
                         ->withPublishTime(
                             Elements\Time::create(Elements\Time::PUBLISHED)
                                 ->withDatetime(
                                     $publishDate
                                 )
                         )
-                        ->addAuthor(
-                            Elements\Author::create()
-                                ->withName($author)
-                        )
                         ->withCover(
                             Elements\Image::create()
                                 ->withURL('https://jpeg.org/images/jpegls-home.jpg')
-                                ->withCaption(
-                                    Elements\Caption::create()
-                                        ->appendText('Some caption to the image')
-                                )
                         )
                 )
                 // Paragraph1

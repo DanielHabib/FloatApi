@@ -25,6 +25,7 @@ class SimpleWriter
         $number,
         $params)
     {
+        $params['publishDate'] = $this->getPublishDate();
         $template = $twig->render(TEMPLATE_SIMPLE_AMP, $params);
         // Create File name
         $filename = FILE_NAME_TEMPLATE_PREFIX.sprintf(FILE_NAME_SIMPLE_AMP, $number);
@@ -47,7 +48,6 @@ class SimpleWriter
         $author = $requestBody['author'];
         $body = $requestBody['body'];
         $filename = 'templates/fb/simple_' . $number . '.html';
-
         $article =
             Elements\InstantArticle::create()
                 ->withCanonicalUrl('http://float.press/articles/fb/' . $number)
@@ -59,10 +59,7 @@ class SimpleWriter
                         ->withPublishTime(
                             Elements\Time::create(Elements\Time::PUBLISHED)
                                 ->withDatetime(
-                                    \DateTime::createFromFormat(
-                                        'j-M-Y G:i:s',
-                                        '14-Aug-1984 19:30:00'
-                                    )
+                                    new \DateTime()
                                 )
                         )
                         ->addAuthor(
@@ -97,5 +94,10 @@ class SimpleWriter
             new \Exception(self::ERROR_UNABLE_TO_WRITE_AMP);
         }
         return $filename;
+    }
+
+    private function getPublishDate()
+    {
+        return date("F j, Y");
     }
 }

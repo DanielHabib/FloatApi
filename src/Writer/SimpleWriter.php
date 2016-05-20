@@ -71,7 +71,8 @@ class SimpleWriter
                         )
                         ->withCover(
                             Elements\Image::create()
-                                ->withURL("http://localhost:8000/assets/r29.jpg")
+                                ->withURL('https://jpeg.org/images/jpegls-home.jpg')
+                                ->withPresentation(Elements\Image::ASPECT_FIT)
                         )
                 )
                 // Paragraph1

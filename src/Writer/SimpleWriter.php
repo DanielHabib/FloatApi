@@ -71,7 +71,7 @@ class SimpleWriter
                         )
                         ->withCover(
                             Elements\Image::create()
-                                ->withURL('https://jpeg.org/images/jpegls-home.jpg')
+                                ->withURL('https://pmcvariety.files.wordpress.com/2015/04/refinery-29.png?w=640&h=360&crop=1')
                                 ->withPresentation(Elements\Image::FULLSCREEN)
                         )
                 )

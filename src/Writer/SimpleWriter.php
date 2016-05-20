@@ -72,7 +72,7 @@ class SimpleWriter
                         ->withCover(
                             Elements\Image::create()
                                 ->withURL('https://jpeg.org/images/jpegls-home.jpg')
-                                ->withPresentation(Elements\Image::ASPECT_FIT)
+                                ->withPresentation(Elements\Image::FULLSCREEN)
                         )
                 )
                 // Paragraph1

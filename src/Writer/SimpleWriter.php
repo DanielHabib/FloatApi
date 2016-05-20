@@ -55,11 +55,10 @@ class SimpleWriter
                 ->withHeader(
                     Elements\Header::create()
                         ->withTitle($headline)
-                        ->withSubTitle('Smaller SubTitle')
                         ->withPublishTime(
                             Elements\Time::create(Elements\Time::PUBLISHED)
                                 ->withDatetime(
-                                    new \DateTime()
+                                    \DateTime::createFromFormat('m j, Y', 'now')
                                 )
                         )
                         ->addAuthor(
@@ -67,7 +66,6 @@ class SimpleWriter
                                 ->withName($author)
                                 ->withDescription('Author more detailed description')
                         )
-                        ->withKicker('Some kicker of this article')
                         ->withCover(
                             Elements\Image::create()
                                 ->withURL('https://jpeg.org/images/jpegls-home.jpg')

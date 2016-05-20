@@ -49,6 +49,9 @@ class SimpleWriter
         $body = $requestBody['body'];
         $filename = 'templates/fb/simple_' . $number . '.html';
         $publishDate = $this->getPublishDate();
+        $publishDate = new \DateTime();
+        $publishDate->createFromFormat('m j, Y', $publishDate->format('m j, Y'));
+
         $article =
             Elements\InstantArticle::create()
                 ->withCanonicalUrl('http://float.press/articles/fb/' . $number)
@@ -59,7 +62,7 @@ class SimpleWriter
                         ->withPublishTime(
                             Elements\Time::create(Elements\Time::PUBLISHED)
                                 ->withDatetime(
-                                    \DateTime::createFromFormat('m j, Y', $publishDate)
+                                    $publishDate
                                 )
                         )
                         ->addAuthor(

@@ -68,7 +68,6 @@ class SimpleWriter
                         ->addAuthor(
                             Elements\Author::create()
                                 ->withName($author)
-                                ->withDescription('Author more detailed description')
                         )
                         ->withCover(
                             Elements\Image::create()

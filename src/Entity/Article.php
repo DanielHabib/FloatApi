@@ -7,7 +7,7 @@ use FloatApi\Entity\User;
 /**
  * @Entity(repositoryClass="FloatApi\Repository\ArticleRepository")
  *
- * @Entity @Table(name="articles")
+ * @Table(name="articles")
  **/
 class Article
 {

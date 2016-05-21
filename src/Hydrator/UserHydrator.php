@@ -7,7 +7,6 @@ use FloatApi\Repository\UserRepository;
 
 class UserHydrator implements HydratorInterface
 {
-
     /**
      * @var UserRepository
      */
@@ -18,7 +17,6 @@ class UserHydrator implements HydratorInterface
      */
     public function __construct(UserRepository $userRepository)
     {
-
         $this->userRepository = $userRepository;
     }
 

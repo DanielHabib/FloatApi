@@ -6,6 +6,7 @@ interface HydratorInterface
 {
     /**
      * @param $data
+     *
      * @return mixed
      */
     public function hydrate($data);

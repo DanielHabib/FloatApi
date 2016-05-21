@@ -11,7 +11,7 @@ class AbstractController
 
     const TEMPLATE_CONTEXT_MAPPING = [
         CONTEXT_AMP => FILE_NAME_SIMPLE_AMP,
-        CONTEXT_FB => FILE_NAME_SIMPLE_FB
+        CONTEXT_FB => FILE_NAME_SIMPLE_FB,
     ];
     /**
      * @return int
@@ -63,11 +63,12 @@ class AbstractController
 //        }
 
         $body = $this->getBody($request);
-        if(array_key_exists('loggedIn', $body)) {
-            if ($body['loggedIn'] === true) {
+        if (array_key_exists('userId', $body)) {
+            if ($body['userId'] !== null) {
                 return true;
             }
         }
+
         return false;
     }
 }

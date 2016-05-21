@@ -4,7 +4,6 @@ namespace FloatApi\Controller;
 
 use FloatApi\Entity\Article;
 use FloatApi\Hydrator\ArticleHydrator;
-use FloatApi\Repository\ArticleRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use FloatApi\Writer\SimpleWriter;
@@ -13,7 +12,6 @@ use Twig_Environment;
 
 class SimpleController extends AbstractController
 {
-
     /**
      * @var Twig_Environment
      */
@@ -35,10 +33,10 @@ class SimpleController extends AbstractController
     protected $articleHydrator;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManager    $em
      * @param Twig_Environment $twig
-     * @param SimpleWriter $simpleWriter
-     * @param ArticleHydrator $articleHydrator
+     * @param SimpleWriter     $simpleWriter
+     * @param ArticleHydrator  $articleHydrator
      */
     public function __construct(
         EntityManager $em,

@@ -16,8 +16,9 @@ class SimpleWriter
     //TODO Remove all dependencies that are constants and just reference them directly
     /**
      * @param Twig_Environment $twig
-     * @param int $number
-     * @param array $params
+     * @param int              $number
+     * @param array            $params
+     *
      * @return string
      */
     public function writeAMPPage(
@@ -34,12 +35,14 @@ class SimpleWriter
         if (fwrite($file, $template) === false) {
             new \Exception(self::ERROR_UNABLE_TO_WRITE_AMP);
         }
+
         return $filename;
     }
 
     /**
      * @param $number
      * @param $requestBody
+     *
      * @return string
      */
     public function writeFBPage($number, $requestBody)
@@ -47,14 +50,14 @@ class SimpleWriter
         $headline = $requestBody['headline'];
         $author = $requestBody['author'];
         $body = $requestBody['body'];
-        $filename = 'templates/fb/simple_' . $number . '.html';
+        $filename = 'templates/fb/simple_'.$number.'.html';
         $publishDate = $this->getPublishDate();
         $publishDate = new \DateTime();
         $publishDate->createFromFormat('m j, Y', $publishDate->format('m j, Y'));
 
         $article =
             Elements\InstantArticle::create()
-                ->withCanonicalUrl('http://float.press/articles/fb/' . $number)
+                ->withCanonicalUrl('http://float.press/articles/fb/'.$number)
                 // Header
                 ->withHeader(
                     Elements\Header::create()
@@ -91,11 +94,12 @@ class SimpleWriter
         if (fwrite($file, $template) === false) {
             new \Exception(self::ERROR_UNABLE_TO_WRITE_AMP);
         }
+
         return $filename;
     }
 
     private function getPublishDate()
     {
-        return date("F j, Y");
+        return date('F j, Y');
     }
 }

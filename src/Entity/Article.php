@@ -2,8 +2,6 @@
 
 namespace FloatApi\Entity;
 
-use FloatApi\Entity\User;
-
 /**
  * @Entity(repositoryClass="FloatApi\Repository\ArticleRepository")
  *

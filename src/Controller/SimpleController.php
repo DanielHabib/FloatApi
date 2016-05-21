@@ -91,7 +91,7 @@ class SimpleController extends AbstractController
         }
 
         // Decode Request
-        $body = $this->getBody($request);
+        $data = $this->getBody($request);
 
         $number = $this->getInc();
 
@@ -99,10 +99,10 @@ class SimpleController extends AbstractController
         $ampFileName = $this->simpleWriter->writeAMPPage(
             $this->twig,
             $number,
-            $body);
+            $data);
 
         //Facebook Instant
-        $fbFileName = $this->simpleWriter->writeFBPage($number, $body);
+        $fbFileName = $this->simpleWriter->writeFBPage($number, $data);
 
         // Create an article object
         $data['fbFileName'] = $fbFileName;

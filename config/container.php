@@ -49,16 +49,16 @@ $container->share(TWIG, function(){
     return $twig;
 });
 
-// User
-$container->share(Hydrator\UserHydrator::class)
-    ->withArgument(Repository\UserRepository::class)
-    ;
 $container->share(Serializer\UserSerializer::class);
 $container->share(Repository\UserRepository::class, function() use ($container){
     /** @var EntityManager $em */
     $em = $container->get(EntityManager::class);
     return $em->getRepository(Entity\User::class);
 });
+// User
+$container->share(Hydrator\UserHydrator::class)
+    ->withArgument(Repository\UserRepository::class)
+;
 
 // Article
 $container->share(Serializer\ArticleSerializer::class);

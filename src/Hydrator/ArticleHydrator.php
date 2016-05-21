@@ -13,6 +13,9 @@ class ArticleHydrator implements HydratorInterface
      */
     protected $articleRepository;
 
+    /**
+     * @param ArticleRepository $articleRepository
+     */
     public function __construct(ArticleRepository $articleRepository)
     {
 

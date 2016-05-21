@@ -6,6 +6,7 @@ use FloatApi\Entity\Article;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use FloatApi\Writer\SimpleWriter;
+use Doctrine\ORM\EntityManager;
 use Twig_Environment;
 
 class SimpleController extends AbstractController
@@ -22,11 +23,18 @@ class SimpleController extends AbstractController
     protected $simpleWriter;
 
     /**
+     * @var EntityManager
+     */
+    protected $em;
+
+    /**
+     * @param EntityManager    $em
      * @param Twig_Environment $twig
      * @param SimpleWriter     $simpleWriter
      */
-    public function __construct(Twig_Environment $twig, SimpleWriter $simpleWriter)
+    public function __construct(EntityManager $em, Twig_Environment $twig, SimpleWriter $simpleWriter)
     {
+        $this->em = $em;
         $this->twig = $twig;
         $this->simpleWriter = $simpleWriter;
     }
@@ -68,7 +76,6 @@ class SimpleController extends AbstractController
         if (!$authorized) {
             return $response->withStatus(401, self::ERROR_MESSAGE_UNAUTHORIZED);
         }
-        $user =
 
         // Decode Request
         $body = $this->getBody($request);
@@ -90,6 +97,9 @@ class SimpleController extends AbstractController
         $article->setFbFileName($fbFileName);
 
         // Serialize
+        $this->em->persist($article);
+        $this->em->flush();
+
         $responseJSON = json_encode(['id' => $number]);
 
         // Return Response

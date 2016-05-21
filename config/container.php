@@ -50,6 +50,7 @@ $container->share(TWIG, function(){
 
 // Controllers
 $container->share(SimpleController::class)
+    ->withArgument(EntityManager::class)
     ->withArgument(TWIG)
     ->withArgument(SimpleWriter::class);
 

@@ -3,6 +3,8 @@
 namespace FloatApi\Controller;
 
 use FloatApi\Entity\Article;
+use FloatApi\Hydrator\ArticleHydrator;
+use FloatApi\Repository\ArticleRepository;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use FloatApi\Writer\SimpleWriter;
@@ -28,15 +30,26 @@ class SimpleController extends AbstractController
     protected $em;
 
     /**
-     * @param EntityManager    $em
-     * @param Twig_Environment $twig
-     * @param SimpleWriter     $simpleWriter
+     * @var ArticleHydrator
      */
-    public function __construct(EntityManager $em, Twig_Environment $twig, SimpleWriter $simpleWriter)
+    protected $articleHydrator;
+
+    /**
+     * @param EntityManager $em
+     * @param Twig_Environment $twig
+     * @param SimpleWriter $simpleWriter
+     * @param ArticleHydrator $articleHydrator
+     */
+    public function __construct(
+        EntityManager $em,
+        Twig_Environment $twig,
+        SimpleWriter $simpleWriter,
+        ArticleHydrator $articleHydrator)
     {
         $this->em = $em;
         $this->twig = $twig;
         $this->simpleWriter = $simpleWriter;
+        $this->articleHydrator = $articleHydrator;
     }
 
     /**
@@ -92,9 +105,10 @@ class SimpleController extends AbstractController
         $fbFileName = $this->simpleWriter->writeFBPage($number, $body);
 
         // Create an article object
-        $article = new Article();
-        $article->setAmpFileName($ampFileName);
-        $article->setFbFileName($fbFileName);
+        $data['fbFileName'] = $fbFileName;
+        $data['ampFileName'] = $ampFileName;
+        // Hydrate
+        $article = $this->articleHydrator->hydrate($data);
 
         // Serialize
         $this->em->persist($article);

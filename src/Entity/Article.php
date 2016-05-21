@@ -28,13 +28,6 @@ class Article
      *
      * @var string
      */
-    protected $author;
-
-    /**
-     * @Column(type="string")
-     *
-     * @var string
-     */
     protected $ampFileName;
 
     /**
@@ -111,21 +104,6 @@ class Article
         $this->user = $user;
     }
 
-    /**
-     * @return string
-     */
-    public function getAuthor()
-    {
-        return $this->author;
-    }
-
-    /**
-     * @param string $author
-     */
-    public function setAuthor($author)
-    {
-        $this->author = $author;
-    }
     /**
      * @return string
      */

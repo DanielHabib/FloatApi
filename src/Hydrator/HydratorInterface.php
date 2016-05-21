@@ -4,5 +4,9 @@ namespace FloatApi\Hydrator;
 
 interface HydratorInterface
 {
-    public static function hydrate($data);
+    /**
+     * @param $data
+     * @return mixed
+     */
+    public function hydrate($data);
 }

@@ -10,6 +10,7 @@ use FloatApi\Hydrator;
 use FloatApi\Serializer;
 use FloatApi\Repository;
 use FloatApi\Entity;
+use FloatApi\Repository\ArticleRepository;
 
 ini_set('display_errors', '1');
 
@@ -48,13 +49,10 @@ $container->share(TWIG, function(){
     return $twig;
 });
 
-// Controllers
-$container->share(SimpleController::class)
-    ->withArgument(EntityManager::class)
-    ->withArgument(TWIG)
-    ->withArgument(SimpleWriter::class);
-
-$container->share(Hydrator\UserHydrator::class);
+// User
+$container->share(Hydrator\UserHydrator::class)
+    ->withArgument(Repository\UserRepository::class)
+    ;
 $container->share(Serializer\UserSerializer::class);
 $container->share(Repository\UserRepository::class, function() use ($container){
     /** @var EntityManager $em */
@@ -62,11 +60,28 @@ $container->share(Repository\UserRepository::class, function() use ($container){
     return $em->getRepository(Entity\User::class);
 });
 
+// Article
+$container->share(Hydrator\ArticleHydrator::class);
+$container->share(Serializer\ArticleSerializer::class);
+$container->share(Repository\ArticleRepository::class, function() use ($container){
+    /** @var EntityManager $em */
+    $em = $container->get(EntityManager::class);
+    return $em->getRepository(Entity\Article::class);
+});
+
+// Controllers
 $container->share(UserController::class)
     ->withArgument(EntityManager::class)
     ->withArgument(Serializer\UserSerializer::class)
     ->withArgument(Hydrator\UserHydrator::class)
     ->withArgument(Repository\UserRepository::class)
-    ;
+;
+
+$container->share(SimpleController::class)
+    ->withArgument(EntityManager::class)
+    ->withArgument(TWIG)
+    ->withArgument(SimpleWriter::class)
+    ->withArgument(ArticleRepository::class);
+
 
 return $container;

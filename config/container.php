@@ -61,7 +61,8 @@ $container->share(Hydrator\UserHydrator::class)
 ;
 
 // Article
-$container->share(Serializer\ArticleSerializer::class);
+$container->share(Serializer\ArticleSerializer::class)
+    ->withArgument(Serializer\UserSerializer::class);
 $container->share(Repository\ArticleRepository::class, function() use ($container){
     /** @var EntityManager $em */
     $em = $container->get(EntityManager::class);

@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use FloatApi\Writer\SimpleWriter;
 use Doctrine\ORM\EntityManager;
 use Twig_Environment;
+use FloatApi\Serializer\ArticleSerializer;
 
 class SimpleController extends AbstractController
 {
@@ -33,21 +34,30 @@ class SimpleController extends AbstractController
     protected $articleHydrator;
 
     /**
-     * @param EntityManager    $em
+     * @var ArticleSerializer
+     */
+    protected $articleSerializer;
+
+    /**
+     * @param EntityManager $em
      * @param Twig_Environment $twig
-     * @param SimpleWriter     $simpleWriter
-     * @param ArticleHydrator  $articleHydrator
+     * @param SimpleWriter $simpleWriter
+     * @param ArticleHydrator $articleHydrator
+     * @param ArticleSerializer $articleSerializer
      */
     public function __construct(
         EntityManager $em,
         Twig_Environment $twig,
         SimpleWriter $simpleWriter,
-        ArticleHydrator $articleHydrator)
+        ArticleHydrator $articleHydrator,
+        ArticleSerializer $articleSerializer
+    )
     {
         $this->em = $em;
         $this->twig = $twig;
         $this->simpleWriter = $simpleWriter;
         $this->articleHydrator = $articleHydrator;
+        $this->articleSerializer = $articleSerializer;
     }
 
     /**
@@ -77,11 +87,10 @@ class SimpleController extends AbstractController
     /**
      * @param Request  $request
      * @param Response $response
-     * @param array    $args
      *
      * @return \Psr\Http\Message\MessageInterface
      */
-    public function createPage(Request $request, Response $response, $args = [])
+    public function createPage(Request $request, Response $response)
     {
         $authorized = $this->checkAuth($request);
         if (!$authorized) {
@@ -112,7 +121,7 @@ class SimpleController extends AbstractController
         $this->em->persist($article);
         $this->em->flush();
 
-        $responseJSON = json_encode(['id' => $number]);
+        $responseJSON = json_encode($this->articleSerializer->transform($article));
 
         // Return Response
         return $this->writeResponse($response, $responseJSON);

@@ -23,7 +23,7 @@ class ArticleHydrator implements HydratorInterface
     /**
      * @param array $data
      *
-     * @return User
+     * @return Article
      */
     public function hydrate($data)
     {

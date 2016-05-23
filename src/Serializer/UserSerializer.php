@@ -11,7 +11,7 @@ class UserSerializer implements SerializerInterface
      *
      * @return array
      */
-    public static function transform($user)
+    public function transform($user)
     {
         // Do NOT seriaize the password
         $data = [

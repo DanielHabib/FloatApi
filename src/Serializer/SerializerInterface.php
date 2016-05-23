@@ -4,5 +4,5 @@ namespace FloatApi\Serializer;
 
 interface SerializerInterface
 {
-    public static function transform($data);
+    public function transform($data);
 }

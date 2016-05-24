@@ -17,14 +17,18 @@ const TEMPLATE_SIMPLE_AMP = 'simple_amp.html';
 const FILE_NAME_INCREMENTER = 'inc.txt';
 const TEMPLATE_COLLECTION = [TEMPLATE_SIMPLE_AMP];
 
-
 // Container
 $container = require __DIR__ . '/config/container.php';
 
 // Routes
-
-// Articles
 $route = new League\Route\RouteCollection($container);
+$route->map('GET', '/', function(ServerRequestInterface $request, ResponseInterface $response, array $args){
+    $data = ['Try' => 'Again'];
+    // Potnetially redirect to home page or subdomain
+    $response->getBody()->write(json_encode($data));
+    return $response->withHeader('Access-Control-Allow-Origin', '*')->withHeader('Access-Control-Allow-Headers', 'Content-Type');
+});
+// Articles
 $route->get('/articles/{context:word}/{id:number}', SimpleController::class . '::renderPage');
 $route->post('/articles', SimpleController::class . '::createPage');
 $route->map('OPTIONS', '/articles', function(ServerRequestInterface $request, ResponseInterface $response, array $args){
@@ -44,5 +48,4 @@ $route->map('OPTIONS', '/users', function(ServerRequestInterface $request, Respo
 // Fire Request
 $response = $route->dispatch($container->get('request'), $container->get('response'));
 $container->get('emitter')->emit($response);
-
 

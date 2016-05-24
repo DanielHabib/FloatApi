@@ -7,7 +7,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class AbstractController
 {
-    const ERROR_MESSAGE_UNAUTHORIZED = 'Unauthorized';
+    const ERROR_MESSAGE_UNAUTHORIZED = 'Unauthorized, please check your credentials';
+    const ERROR_ARTICLE_NOT_FOUND = 'Article Not Found';
 
     const TEMPLATE_CONTEXT_MAPPING = [
         CONTEXT_AMP => FILE_NAME_SIMPLE_AMP,
@@ -52,6 +53,11 @@ class AbstractController
         return json_decode($request->getBody()->getContents(), true);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return bool
+     */
     public function checkAuth(Request $request)
     {
         // TODO: Make this based off of cookies?
@@ -70,5 +76,15 @@ class AbstractController
         }
 
         return false;
+    }
+
+    /**
+     * @param $response
+     *
+     * @return mixed
+     */
+    protected function renderNotFound($response)
+    {
+        return $response->withStatus(404, self::ERROR_ARTICLE_NOT_FOUND);
     }
 }

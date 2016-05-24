@@ -39,10 +39,10 @@ class SimpleController extends AbstractController
     protected $articleSerializer;
 
     /**
-     * @param EntityManager $em
-     * @param Twig_Environment $twig
-     * @param SimpleWriter $simpleWriter
-     * @param ArticleHydrator $articleHydrator
+     * @param EntityManager     $em
+     * @param Twig_Environment  $twig
+     * @param SimpleWriter      $simpleWriter
+     * @param ArticleHydrator   $articleHydrator
      * @param ArticleSerializer $articleSerializer
      */
     public function __construct(
@@ -51,8 +51,7 @@ class SimpleController extends AbstractController
         SimpleWriter $simpleWriter,
         ArticleHydrator $articleHydrator,
         ArticleSerializer $articleSerializer
-    )
-    {
+    ) {
         $this->em = $em;
         $this->twig = $twig;
         $this->simpleWriter = $simpleWriter;
@@ -76,8 +75,9 @@ class SimpleController extends AbstractController
         $templateMapping = self::TEMPLATE_CONTEXT_MAPPING;
         $template = $this->twig->render(sprintf($templateMapping[$context], $id));
 
-        //TODO Apple News
-        //TODO RSS
+        if ($template === false) {
+            return $this->renderNotFound($response);
+        }
 
         $response->getBody()->write($template);
 

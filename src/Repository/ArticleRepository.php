@@ -4,12 +4,11 @@ namespace FloatApi\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-
 class ArticleRepository extends EntityRepository
 {
-
     /**
      * @param int $userId
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      *
      * @return array|null
@@ -33,5 +32,4 @@ class ArticleRepository extends EntityRepository
 
         return $qb->execute();
     }
-
 }

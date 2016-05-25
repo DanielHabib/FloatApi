@@ -1,6 +1,7 @@
 <?php
 
 namespace FloatApi\Entity;
+
 use FloatApi\Behavior;
 
 /**

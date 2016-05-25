@@ -2,10 +2,8 @@
 
 namespace FloatApi\Behavior\Transformer\Date;
 
-
 trait TransformsUpdatedDate
 {
-
     /**
      * @param $data
      * @param $date

@@ -4,7 +4,6 @@ namespace FloatApi\Behavior\Transformer\Date;
 
 trait TransformsCreatedDate
 {
-
     /**
      * @param $data
      * @param $date

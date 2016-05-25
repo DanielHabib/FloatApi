@@ -17,7 +17,7 @@ class UserSerializer implements SerializerInterface
      */
     public function transform($user)
     {
-        // Do NOT seriaize the password
+        // Do NOT serialize the password
         $data = [
 
             'id' => $user->getId(),

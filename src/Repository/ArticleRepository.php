@@ -3,7 +3,7 @@
 namespace FloatApi\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use FloatApi\Entity\Article;
+
 
 class ArticleRepository extends EntityRepository
 {

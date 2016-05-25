@@ -50,8 +50,7 @@ class SimpleWriter
         $headline = $requestBody['headline'];
         $author = $requestBody['author'];
         $body = $requestBody['body'];
-        $filename = 'templates/fb/simple_'.$number.'.html';
-        $publishDate = $this->getPublishDate();
+        $filename = FILE_NAME_TEMPLATE_PREFIX.sprintf(FILE_NAME_SIMPLE_FB, $number);
         $publishDate = new \DateTime();
         $publishDate->createFromFormat('m j, Y', $publishDate->format('m j, Y'));
 

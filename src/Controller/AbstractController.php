@@ -83,7 +83,7 @@ class AbstractController
      *
      * @return mixed
      */
-    protected function renderNotFound($response)
+    protected function renderNotFound(Response $response)
     {
         return $response->withStatus(404, self::ERROR_ARTICLE_NOT_FOUND);
     }

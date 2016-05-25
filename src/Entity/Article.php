@@ -10,8 +10,8 @@ use FloatApi\Behavior;
  **/
 class Article
 {
-    use Behavior\Date\HasCreatedDate;
-    use Behavior\Date\HasUpdatedDate;
+    use Behavior\Entity\Date\HasCreatedDate;
+    use Behavior\Entity\Date\HasUpdatedDate;
     /**
      * @Id @Column(type="integer") @GeneratedValue
      **/

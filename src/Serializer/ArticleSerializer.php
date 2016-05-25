@@ -2,10 +2,14 @@
 
 namespace FloatApi\Serializer;
 
+use FloatApi\Behavior\Transformer\Date\TransformsCreatedDate;
+use FloatApi\Behavior\Transformer\Date\TransformsUpdatedDate;
 use FloatApi\Entity\Article;
 
 class ArticleSerializer implements SerializerInterface
 {
+    use TransformsCreatedDate;
+    use TransformsUpdatedDate;
     /**
      * @var UserSerializer
      */
@@ -32,9 +36,10 @@ class ArticleSerializer implements SerializerInterface
             'ampFileName' => $article->getAmpFileName(),
             'fbFileName' => $article->getFbFileName(),
             'user' => $this->userSerializer->transform($article->getUser()),
-            'updated' => $article->getUpdatedDate(),
-            'created' => $article->getCreatedDate()
         ];
+
+        $this->transformCreatedDate($data, $article->getCreatedDate());
+        $this->transformUpdatedDate($data, $article->getUpdatedDate());
 
         return $data;
     }

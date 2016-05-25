@@ -2,6 +2,7 @@
 
 namespace FloatApi\Entity;
 
+use FloatApi\Behavior;
 /**
  * @Entity(repositoryClass="FloatApi\Repository\ArticleRepository")
  *
@@ -9,6 +10,8 @@ namespace FloatApi\Entity;
  **/
 class Article
 {
+    use Behavior\HasCreatedDate;
+    use Behavior\HasUpdatedDate;
     /**
      * @Id @Column(type="integer") @GeneratedValue
      **/

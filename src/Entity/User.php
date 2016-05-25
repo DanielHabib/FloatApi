@@ -1,6 +1,7 @@
 <?php
 
 namespace FloatApi\Entity;
+use FloatApi\Behavior;
 
 /**
  * @Entity(repositoryClass="FloatApi\Repository\UserRepository")
@@ -9,6 +10,8 @@ namespace FloatApi\Entity;
  **/
 class User
 {
+    use Behavior\HasCreatedDate;
+    use Behavior\HasUpdatedDate;
     /**
      * @Id @Column(type="integer") @GeneratedValue
      **/

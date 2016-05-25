@@ -46,5 +46,7 @@ class ArticleGetController extends AbstractController
         {
             array_push($serializedArticles, $this->articleSerializer->transform($article));
         }
+
+        $this->writeResponse($response, json_encode($serializedArticles));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace FloatApi\Behavior;
+namespace FloatApi\Behavior\Entity\Date;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,8 +13,6 @@ trait HasCreatedDate
      *     name="created",
      *     nullable=false
      * )
-     *
-     * @Solr\Field(name="created_dt")
      *
      * @var \DateTime
      */

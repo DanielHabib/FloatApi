@@ -10,8 +10,8 @@ use FloatApi\Behavior;
  **/
 class User
 {
-    use Behavior\HasCreatedDate;
-    use Behavior\HasUpdatedDate;
+    use Behavior\Date\HasCreatedDate;
+    use Behavior\Date\HasUpdatedDate;
     /**
      * @Id @Column(type="integer") @GeneratedValue
      **/

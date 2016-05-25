@@ -1,6 +1,6 @@
 <?php
 
-namespace FloatApi\Behavior;
+namespace FloatApi\Behavior\Entity\Date;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;

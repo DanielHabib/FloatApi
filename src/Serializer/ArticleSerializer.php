@@ -32,6 +32,8 @@ class ArticleSerializer implements SerializerInterface
             'ampFileName' => $article->getAmpFileName(),
             'fbFileName' => $article->getFbFileName(),
             'user' => $this->userSerializer->transform($article->getUser()),
+            'updated' => $article->getUpdatedDate(),
+            'created' => $article->getCreatedDate()
         ];
 
         return $data;

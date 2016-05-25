@@ -59,8 +59,13 @@ class ArticleGetController extends AbstractController
         $this->articleSerializer = $articleSerializer;
     }
 
-    public function getList()
+    public function getArticlesForUser(Request $request, Response $response, $args = [])
     {
+        $data = $this->getBody($request);
+
+        $userId = $data['userId'];
+
+
 
     }
 }

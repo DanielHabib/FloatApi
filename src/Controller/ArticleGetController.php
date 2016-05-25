@@ -9,53 +9,30 @@ use FloatApi\Writer\SimpleWriter;
 use Doctrine\ORM\EntityManager;
 use Twig_Environment;
 use FloatApi\Serializer\ArticleSerializer;
+use FloatApi\Repository\ArticleRepository;
 
 class ArticleGetController extends AbstractController
 {
-    /**
-     * @var Twig_Environment
-     */
-    protected $twig;
-
-    /**
-     * @var SimpleWriter
-     */
-    protected $simpleWriter;
-
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * @var ArticleHydrator
-     */
-    protected $articleHydrator;
-
     /**
      * @var ArticleSerializer
      */
     protected $articleSerializer;
 
     /**
-     * @param EntityManager     $em
-     * @param Twig_Environment  $twig
-     * @param SimpleWriter      $simpleWriter
-     * @param ArticleHydrator   $articleHydrator
+     * @var ArticleRepository
+     */
+    protected $articleRepository;
+
+    /**
      * @param ArticleSerializer $articleSerializer
+     * @param ArticleRepository $articleRepository
      */
     public function __construct(
-        EntityManager $em,
-        Twig_Environment $twig,
-        SimpleWriter $simpleWriter,
-        ArticleHydrator $articleHydrator,
-        ArticleSerializer $articleSerializer
+        ArticleSerializer $articleSerializer,
+        ArticleRepository $articleRepository
     ) {
-        $this->em = $em;
-        $this->twig = $twig;
-        $this->simpleWriter = $simpleWriter;
-        $this->articleHydrator = $articleHydrator;
         $this->articleSerializer = $articleSerializer;
+        $this->articleRepository = $articleRepository;
     }
 
     public function getArticlesForUser(Request $request, Response $response, $args = [])
@@ -63,5 +40,11 @@ class ArticleGetController extends AbstractController
         $data = $this->getBody($request);
 
         $userId = $data['userId'];
+        $articles = $this->articleRepository->getArticlesForUser($userId);
+        $serializedArticles = [];
+        foreach($articles as $article)
+        {
+            array_push($serializedArticles, $this->articleSerializer->transform($article));
+        }
     }
 }

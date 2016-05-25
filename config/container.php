@@ -71,6 +71,10 @@ $container->share(Repository\ArticleRepository::class, function() use ($containe
 $container->share(Hydrator\ArticleHydrator::class)
     ->withArgument(ArticleRepository::class);
 
+$container->share(\FloatApi\Controller\ArticleGetController::class)
+    ->withArgument(Serializer\ArticleSerializer::class)
+    ->withArgument(ArticleRepository::class)
+    ;
 // Controllers
 $container->share(UserController::class)
     ->withArgument(EntityManager::class)

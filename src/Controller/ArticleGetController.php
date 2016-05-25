@@ -2,12 +2,8 @@
 
 namespace FloatApi\Controller;
 
-use FloatApi\Hydrator\ArticleHydrator;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use FloatApi\Writer\SimpleWriter;
-use Doctrine\ORM\EntityManager;
-use Twig_Environment;
 use FloatApi\Serializer\ArticleSerializer;
 use FloatApi\Repository\ArticleRepository;
 
@@ -35,11 +31,10 @@ class ArticleGetController extends AbstractController
         $this->articleRepository = $articleRepository;
     }
 
-
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param array $args
+     * @param array    $args
      *
      * @return Response
      */
@@ -51,8 +46,7 @@ class ArticleGetController extends AbstractController
         $articles = $this->articleRepository->getArticlesForUser($userId);
         $serializedArticles = [];
 
-        foreach($articles as $article)
-        {
+        foreach ($articles as $article) {
             array_push($serializedArticles, $this->articleSerializer->transform($article));
         }
 

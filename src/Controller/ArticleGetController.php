@@ -35,6 +35,14 @@ class ArticleGetController extends AbstractController
         $this->articleRepository = $articleRepository;
     }
 
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     *
+     * @return Response
+     */
     public function getArticlesForUser(Request $request, Response $response, $args = [])
     {
         $data = $this->getBody($request);
@@ -42,11 +50,12 @@ class ArticleGetController extends AbstractController
         $userId = $data['userId'];
         $articles = $this->articleRepository->getArticlesForUser($userId);
         $serializedArticles = [];
+
         foreach($articles as $article)
         {
             array_push($serializedArticles, $this->articleSerializer->transform($article));
         }
 
-        $this->writeResponse($response, json_encode($serializedArticles));
+        return $this->writeResponse($response, json_encode($serializedArticles));
     }
 }

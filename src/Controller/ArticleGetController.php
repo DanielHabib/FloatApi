@@ -42,14 +42,16 @@ class ArticleGetController extends AbstractController
     {
         $data = $this->getBody($request);
 
-        $userId = $data['userId'];
-        $articles = $this->articleRepository->getArticlesForUser($userId);
+        $articles = $this->articleRepository->getArticlesForUser($data['userId']);
+
         $serializedArticles = [];
 
         foreach ($articles as $article) {
             array_push($serializedArticles, $this->articleSerializer->transform($article));
         }
-
+        if (empty($serializedArticles)) {
+            return $this->renderNotFound($response);
+        }
         return $this->writeResponse($response, json_encode($serializedArticles));
     }
 }

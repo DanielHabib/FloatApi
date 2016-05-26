@@ -3,6 +3,7 @@
 namespace FloatApi\Behavior\Entity\Date;
 
 use DateTime;
+use Doctrine\ORM\Mapping as ORM;
 
 trait HasCreatedDate
 {
@@ -18,7 +19,7 @@ trait HasCreatedDate
     protected $createdDate;
 
     /**
-     * @PrePersist
+     * @ORM\PrePersist
      */
     public function updateCreated()
     {

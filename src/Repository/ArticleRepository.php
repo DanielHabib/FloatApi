@@ -25,8 +25,6 @@ class ArticleRepository extends EntityRepository
                 )
             )
             ->setParameter('userId', $userId)
-            ->orderBy('e.created', 'DESC')
-            ->setMaxResults(1)
             ->getQuery()
         ;
 

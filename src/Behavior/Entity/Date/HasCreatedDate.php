@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait HasCreatedDate
 {
     /**
-     * @ORM\Column(
+     * @Column(
      *     type="datetime",
      *     name="created",
      *     nullable=false
@@ -19,7 +19,7 @@ trait HasCreatedDate
     protected $createdDate;
 
     /**
-     * @ORM\PrePersist
+     * @PrePersist
      */
     public function updateCreated()
     {

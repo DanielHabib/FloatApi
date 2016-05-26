@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 trait HasUpdatedDate
 {
     /**
-     * @ORM\Column(
+     * @Column(
      *     type="datetime",
      *     nullable=false,
      *     name="updated"
@@ -19,8 +19,8 @@ trait HasUpdatedDate
     protected $updatedDate;
 
     /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
+     * @PrePersist
+     * @PreUpdate
      */
     public function updateUpdated()
     {

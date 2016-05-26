@@ -40,7 +40,7 @@ class Article
     protected $fbFileName;
 
     /**
-     * @ORM\Column(
+     * @Column(
      *     name="user_id",
      *     type="integer",
      *     length=11,
@@ -53,11 +53,11 @@ class Article
     protected $userId;
 
     /**
-     * @ORM\ManyToOne(
+     * @ManyToOne(
      *     targetEntity="FloatApi\Entity\User",
      *     cascade={"persist"}
      * )
-     * @ORM\JoinColumn(
+     * @JoinColumn(
      *     name="user_id",
      *     referencedColumnName="id"
      * )

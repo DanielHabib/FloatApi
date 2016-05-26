@@ -34,7 +34,7 @@ $container->share(EntityManager::class, function() use ($isDevMode){
         'user' => 'root',
         'password' => '7CVzgIrdtQ',
         'host' => 'localhost',
-        'driver' => 'InnoDb',
+        'driver' => 'pdo_mysql',
     );
     $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../src"), $isDevMode);
     $conn = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);

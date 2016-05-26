@@ -4,6 +4,7 @@ namespace FloatApi\Entity;
 
 use FloatApi\Behavior;
 
+
 /**
  * @Entity(repositoryClass="FloatApi\Repository\UserRepository")
  * @HasLifecycleCallbacks
@@ -13,10 +14,7 @@ class User
 {
     use Behavior\Entity\Date\HasCreatedDate;
     use Behavior\Entity\Date\HasUpdatedDate;
-    /**
-     * @Id @Column(type="integer") @GeneratedValue
-     **/
-    protected $id;
+    use Behavior\Entity\HasId;
 
     /**
      * @Column(type="string")

@@ -13,10 +13,7 @@ class Article
 {
     use Behavior\Entity\Date\HasCreatedDate;
     use Behavior\Entity\Date\HasUpdatedDate;
-    /**
-     * @Id @Column(type="integer") @GeneratedValue
-     **/
-    protected $id;
+    use Behavior\Entity\HasId;
 
     /**
      * @Column(type="string")

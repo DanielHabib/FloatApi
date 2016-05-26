@@ -5,6 +5,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Doctrine\ORM\EntityManager;
 use FloatApi\Controller\UserController;
+use \FloatApi\Controller\ArticleGetController;
 
 require_once 'vendor/autoload.php';
 
@@ -30,6 +31,7 @@ $route->map('GET', '/', function(ServerRequestInterface $request, ResponseInterf
 });
 // Articles
 $route->get('/articles/{context:word}/{id:number}', SimpleController::class . '::renderPage');
+$route->get('/articles', \FloatApi\Controller\ArticleGetController::class . '::getArticlesForUser');
 $route->post('/articles', SimpleController::class . '::createPage');
 $route->map('OPTIONS', '/articles', function(ServerRequestInterface $request, ResponseInterface $response, array $args){
     return $response->withHeader('Access-Control-Allow-Origin', '*')->withHeader('Access-Control-Allow-Headers', 'Content-Type');

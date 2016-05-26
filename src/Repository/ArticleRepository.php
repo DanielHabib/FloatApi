@@ -20,7 +20,7 @@ class ArticleRepository extends EntityRepository
         $qb = $qb
             ->where(
                 $qb->expr()->eq(
-                    'e.userId',
+                    'e.user_id',
                     ':userId'
                 )
             )

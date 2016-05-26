@@ -3,7 +3,6 @@
 namespace FloatApi\Behavior\Entity\Date;
 
 use DateTime;
-use Doctrine\ORM\Mapping as ORM;
 
 trait HasUpdatedDate
 {
@@ -19,8 +18,8 @@ trait HasUpdatedDate
     protected $updatedDate;
 
     /**
-     * @ORM\PrePersist
-     * @ORM\PreUpdate
+     * @PrePersist
+     * @PreUpdate
      */
     public function updateUpdated()
     {

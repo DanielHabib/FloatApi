@@ -6,7 +6,7 @@ use FloatApi\Behavior;
 
 /**
  * @Entity(repositoryClass="FloatApi\Repository\ArticleRepository")
- *
+ * @HasLifecycleCallbacks
  * @Table(name="articles")
  **/
 class Article

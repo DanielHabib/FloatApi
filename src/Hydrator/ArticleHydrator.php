@@ -13,10 +13,21 @@ class ArticleHydrator implements HydratorInterface
     protected $articleRepository;
 
     /**
-     * @param ArticleRepository $articleRepository
+     * @var ArticleRepository
      */
-    public function __construct(ArticleRepository $articleRepository)
+    protected $userHydrator;
+
+
+    /**
+     * @param ArticleRepository $articleRepository
+     * @param UserHydrator $userHydrator
+     */
+    public function __construct(
+        ArticleRepository $articleRepository,
+        UserHydrator $userHydrator
+    )
     {
+        $this->userHydrator = $userHydrator;
         $this->articleRepository = $articleRepository;
     }
 
@@ -40,7 +51,10 @@ class ArticleHydrator implements HydratorInterface
             if (array_key_exists('ampFileName', $data)) {
                 $article->setAmpFileName($data['ampFileName']);
             }
-
+            if (array_key_exists('user', $data)) {
+                $user = $this->userHydrator->hydrate($data['user']);
+                $article->setUser($user);
+            }
             return $article;
         }
 
@@ -48,6 +62,7 @@ class ArticleHydrator implements HydratorInterface
         $article->setAmpFileName($data['ampFileName']);
         $article->setFbFileName($data['fbFileName']);
         $article->setHeadline($data['headline']);
+        $article->setUser($this->userHydrator->hydrate($data['user']));
 
         return $article;
     }

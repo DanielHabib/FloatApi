@@ -119,7 +119,6 @@ class UserController extends AbstractController
     /**
      * @param Request  $request
      * @param Response $response
-     * @param array    $args
      *
      * @return \Psr\Http\Message\MessageInterface
      */

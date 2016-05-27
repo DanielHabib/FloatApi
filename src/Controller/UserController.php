@@ -2,8 +2,8 @@
 
 namespace FloatApi\Controller;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Zend\Diactoros\Request;
+use Zend\Diactoros\Response;
 use FloatApi\Entity\User;
 use Doctrine\ORM\EntityManager;
 use FloatApi\Serializer\UserSerializer;
@@ -123,7 +123,7 @@ class UserController extends AbstractController
      *
      * @return \Psr\Http\Message\MessageInterface
      */
-    public function createUser(Request $request, Response $response, $args = [])
+    public function createUser(Request $request, Response $response)
     {
         $body = $this->getBody($request);
 

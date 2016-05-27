@@ -17,16 +17,14 @@ class ArticleHydrator implements HydratorInterface
      */
     protected $userHydrator;
 
-
     /**
      * @param ArticleRepository $articleRepository
-     * @param UserHydrator $userHydrator
+     * @param UserHydrator      $userHydrator
      */
     public function __construct(
         ArticleRepository $articleRepository,
         UserHydrator $userHydrator
-    )
-    {
+    ) {
         $this->userHydrator = $userHydrator;
         $this->articleRepository = $articleRepository;
     }
@@ -55,6 +53,7 @@ class ArticleHydrator implements HydratorInterface
                 $user = $this->userHydrator->hydrate($data['user']);
                 $article->setUser($user);
             }
+
             return $article;
         }
 

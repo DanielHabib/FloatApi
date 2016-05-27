@@ -2,8 +2,8 @@
 
 namespace FloatApi\Controller;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Zend\Diactoros\Response;
+use Zend\Diactoros\Request;
 
 class AbstractController
 {

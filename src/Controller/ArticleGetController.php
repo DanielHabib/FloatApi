@@ -52,6 +52,7 @@ class ArticleGetController extends AbstractController
         if (empty($serializedArticles)) {
             return $this->renderNotFound($response);
         }
+
         return $this->writeResponse($response, json_encode($serializedArticles));
     }
 }

@@ -4,7 +4,6 @@ namespace FloatApi\Entity;
 
 use FloatApi\Behavior;
 
-
 /**
  * @Entity(repositoryClass="FloatApi\Repository\UserRepository")
  * @HasLifecycleCallbacks

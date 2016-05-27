@@ -13,7 +13,6 @@ trait HasId
      * )
      * @GeneratedValue
      *
-     *
      * @var int
      */
     protected $id;

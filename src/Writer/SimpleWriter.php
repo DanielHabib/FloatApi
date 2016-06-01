@@ -13,7 +13,7 @@ class SimpleWriter
      * @param int              $number
      * @param array            $params
      */
-    //TODO Remove all dependencies that are constants and just reference them directly
+    // TODO Remove all dependencies that are constants and just reference them directly
     /**
      * @param Twig_Environment $twig
      * @param int              $number

@@ -3,7 +3,7 @@
 namespace FloatApi\Controller;
 
 use FloatApi\Hydrator\ArticleHydrator;
-use Zend\Diactoros\Request;
+use Zend\Diactoros\ServerRequest as Request;
 use Zend\Diactoros\Response;
 use FloatApi\Writer\SimpleWriter;
 use Doctrine\ORM\EntityManager;

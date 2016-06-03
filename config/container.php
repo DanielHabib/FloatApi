@@ -88,7 +88,8 @@ $container->share(SimpleController::class)
     ->withArgument(EntityManager::class)
     ->withArgument(TWIG)
     ->withArgument(SimpleWriter::class)
-    ->withArgument(Hydrator\ArticleHydrator::class);
+    ->withArgument(Hydrator\ArticleHydrator::class)
+    ->withArgument(Serializer\ArticleSerializer::class);
 
 
 return $container;
